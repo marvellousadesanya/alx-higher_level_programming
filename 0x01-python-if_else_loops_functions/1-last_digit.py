@@ -9,6 +9,9 @@ repr(number)
 last_digit = repr(number)[-1]
 # Convert back to int
 last_digit = int(last_digit)
+# However, the number could be negative so check for that
+if number < 0:
+    last_digit = -(last_digit)
 
 # Conditional statements
 if last_digit > 5:
