@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import random
+number = random.randint(-10000, 10000)
+
+# First convert number to string
+repr(number)
+
+# Then get the last digit using string formatting
+last_digit = repr(number)[-1]
+# Convert back to int
+last_digit = int(last_digit)
+
+# Conditional statements
+if last_digit > 5:
+    print(f"Last digit of {number} is {last_digit} and is greater than 5")
+elif last_digit == 0:
+    print(f"Last digit of {number} is {last_digit} and is 0")
+else:
+    print(f"Last digit of {number} is {last_digit} and is less than 6 and not 0")
+
