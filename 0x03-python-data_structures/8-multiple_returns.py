@@ -5,4 +5,3 @@ def multiple_returns(sentence):
     if len_sentence < 1:
         sentence[0] = "None",
     return (len_sentence, sentence[0])
-        
