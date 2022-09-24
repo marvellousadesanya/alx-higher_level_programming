@@ -7,7 +7,7 @@ def add_tuple(tuple_a=(), tuple_b=()):
     # Check if size of tuples is
     # not less or more than 2
     if len_tuple_a < 1:
-        tuple_a = tuple(0, 0)
+        tuple_a = (0, 0)
     if len_tuple_a < 2:
         tuple_a = (tuple_a[0], 0)
     if len_tuple_a > 2:
