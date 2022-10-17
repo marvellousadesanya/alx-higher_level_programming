@@ -52,9 +52,8 @@ class Rectangle:
 
     def __str__(self):
         '''Returns a string of characters printing rect'''
-        if self.__height == 0 or self.__width == 0:
-            string = ""
-        elif self.__width != 0 and self.__height != 0:
+        string = ""
+        if self.__width != 0 and self.__height != 0:
             # Print the width for every line of the height
             string += "\n".join("#" * self.__width
                                 for j in range(self.__height))
