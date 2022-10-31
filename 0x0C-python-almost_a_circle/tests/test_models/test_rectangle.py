@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-
+# test_rectangle.py
+# Brennan D Baraban <375@holbertonschool.com>
 """Defines unittests for models/rectangle.py.
 Unittest classes:
     TestRectangle_instantiation - line 25
@@ -566,6 +567,11 @@ class TestRectangle_update_args(unittest.TestCase):
         r.update(89, 2, 3, 4, 5)
         self.assertEqual("[Rectangle] (89) 4/5 - 2/3", str(r))
 
+    def test_update_args_more_than_five(self):
+        r = Rectangle(10, 10, 10, 10, 10)
+        r.update(89, 2, 3, 4, 5, 6)
+        self.assertEqual("[Rectangle] (89) 4/5 - 2/3", str(r))
+
     def test_update_args_None_id(self):
         r = Rectangle(10, 10, 10, 10, 10)
         r.update(None)
@@ -577,6 +583,12 @@ class TestRectangle_update_args(unittest.TestCase):
         r.update(None, 4, 5, 2)
         correct = "[Rectangle] ({}) 2/10 - 4/5".format(r.id)
         self.assertEqual(correct, str(r))
+
+    def test_update_args_twice(self):
+        r = Rectangle(10, 10, 10, 10, 10)
+        r.update(89, 2, 3, 4, 5, 6)
+        r.update(6, 5, 4, 3, 2, 89)
+        self.assertEqual("[Rectangle] (6) 3/2 - 5/4", str(r))
 
     def test_update_args_invalid_width_type(self):
         r = Rectangle(10, 10, 10, 10, 10)
@@ -789,7 +801,6 @@ class TestRectangle_to_dictionary(unittest.TestCase):
         r = Rectangle(10, 2, 4, 1, 2)
         with self.assertRaises(TypeError):
             r.to_dictionary(1)
-
 
 if __name__ == "__main__":
     unittest.main()
