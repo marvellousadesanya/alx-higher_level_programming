@@ -1,111 +1,127 @@
 #!/usr/bin/python3
-'''Module for Rectangle class'''
+
+"""Defines The Rectangle Model
+Its base off of Base class"""
 
 from models.base import Base
 
 
 class Rectangle(Base):
+    """Rectangle Model has four variables
+    width, height x and y"""
+
     def __init__(self, width, height, x=0, y=0, id=None):
+        """Initializes instance variables"""
+        super().__init__(id)
+        self.validate_size("width", width)
+        self.validate_size("height", height)
+        self.validate_size("x", x, 0)
+        self.validate_size("y", y, 0)
         self.__width = width
         self.__height = height
         self.__x = x
         self.__y = y
-        super().__init__(id)
-        
+
     @property
     def width(self):
-        '''width getter'''
+        """defines getter for __width"""
         return self.__width
-
-    @width.setter
-    def width(self, value):
-        """width setter"""
-        if type(value) is not int:
-            raise TypeError("width must be an integer")
-        if value <= 0:
-            raise ValueError("width must be > 0")
-        self.__width = value
 
     @property
     def height(self):
-        """height getter"""
+        """defines getter for __height"""
         return self.__height
-
-    @height.setter
-    def height(self, value):
-        """height setter"""
-        if type(value) is not int:
-            raise TypeError("height must be an integer")
-        if value <= 0:
-            raise ValueError("height must be > 0")
-        self.__height = value
 
     @property
     def x(self):
-        """x getter"""
+        """defines getter for __x"""
         return self.__x
-
-    @x.setter
-    def x(self, val):
-        """x setter"""
-        if type(val) is not int:
-            raise TypeError("x must be an integer")
-        if val < 0:
-            raise ValueError("x must be >= 0")
-        self.__x = val
 
     @property
     def y(self):
-        """y getter"""
+        """defines getter for __y"""
         return self.__y
+
+    @width.setter
+    def width(self, val):
+        """defines setter for __width"""
+        self.validate_size("width", val)
+        self.__width = val
+
+    @height.setter
+    def height(self, val):
+        """defines setter for __height"""
+        self.validate_size("height", val)
+        self.__height = val
+
+    @x.setter
+    def x(self, val):
+        """defines setter for __x"""
+        self.validate_size("x", val, 0)
+        self.__x = val
 
     @y.setter
     def y(self, val):
-        """y setter"""
-        if type(val) is not int:
-            raise TypeError("y must be an integer")
-        if val < 0:
-            raise ValueError("y must be >= 0")
+        """defines setter for __y"""
+        self.validate_size("y", val, 0)
         self.__y = val
 
     def area(self):
-        """Return the area of the Rectangle"""
+        """get the area of the rectangle"""
         return self.width * self.height
 
     def display(self):
-        """ displays a rectangle """
-        rectangle = self.y * "\n"
+        """Prints self using #"""
+        y_offset = "\n" * self.y
+        x_offset = " " * self.x
+        print(y_offset, end='')
         for i in range(self.height):
-            rectangle += (" " * self.x)
-            rectangle += ("#" * self.width) + "\n"
-
-        print(rectangle, end='')
+            print(x_offset, "#" * self.width, sep='')
 
     def __str__(self):
-        """ str special method """
-        str_rectangle = "[Rectangle] "
-        str_id = "({}) ".format(self.id)
-        str_xy = "{}/{} - ".format(self.x, self.y)
-        str_wh = "{}/{}".format(self.width, self.height)
-
-        return str_rectangle + str_id + str_xy + str_wh
+        """print a formatted form of self"""
+        name = type(self).__name__
+        rep = f"[{name}] ({self.id}) {self.x}/{self.y}"\
+            f" - {self.width}/{self.height}"
+        return rep
 
     def update(self, *args, **kwargs):
-        """ update method """
-        if args is not None and len(args) is not 0:
-            list_atr = ['id', 'width', 'height', 'x', 'y']
-            for i in range(len(args)):
-                setattr(self, list_atr[i], args[i])
-        else:
-            for key, value in kwargs.items():
-                setattr(self, key, value)
+        """resets the attributes of self"""
+
+        L = len(args)
+        if L > 0:
+            self.id = args[0]
+        if L > 1:
+            self.width = args[1]
+        if L > 2:
+            self.height = args[2]
+        if L > 3:
+            self.x = args[3]
+        if L > 4:
+            self.y = args[4]
+
+        if L:
+            return
+
+        valids = ("id", "height", "width", "x", "y")
+        for key, val in kwargs.items():
+            if key in valids:
+                self.__setattr__(key, val)
 
     def to_dictionary(self):
-        """ method that returns a dictionary with properties """
-        list_atr = ['id', 'width', 'height', 'x', 'y']
-        dict_res = {}
+        """Converts self to a dictionary"""
+        return {
+            "id": self.id,
+            "width": self.width,
+            "height": self.height,
+            "x": self.x, "y": self.y
+        }
 
-        for key in list_atr:
-            dict_res[key] = getattr(self, key)
-
-        return dict_res
+    def to_csv_str(self):
+        """returns a csv string of self"""
+        fmt = "{},{},{},{},{}"
+        return fmt.format(*(
+            self.id,
+            self.width, self.height,
+            self.x, self.y
+        ))
