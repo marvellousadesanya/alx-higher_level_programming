@@ -1,4 +1,5 @@
 -- List all records of the table
-SELECT DISTINCT score, name
+SELECT score, name
 FROM second_table
-ORDER BY score, name DESC;
+WHERE name != ""
+ORDER BY score DESC;
