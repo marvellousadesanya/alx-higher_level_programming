@@ -6,6 +6,6 @@ if (!Number.isInteger(size) || !size) {
   console.log('Missing size');
 }
 
-for (let j = 1; j < size; j++) {
+for (let j = 0; j < size; j++) {
     console.log('X'.repeat(size));
 }
