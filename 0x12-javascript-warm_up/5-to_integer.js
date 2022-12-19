@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-let numCheck = process.argv[2]
+let numCheck = process.argv[2];
 numCheck = Number(numCheck);
 
 if (!Number.isInteger(numCheck)) {
